@@ -6,7 +6,7 @@ const UPGRADE_MENU = preload("res://BuyMenu.tscn")
 var experience = 0
 func add_to_exp(value):
 	experience += value
-var stats = {"snake_starting_size": 5, "white_pellet_value": 1}
+var stats = {"snake_starting_size": 5, "white_pellet_value": 1, "exp_multiplier": 1}
 
 var menu
 var world

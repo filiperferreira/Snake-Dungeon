@@ -177,13 +177,16 @@ func overlap(area):
 		pass
 
 var experience = 0
+var exp_multiplier = 0
+func set_exp_multiplier(value):
+	exp_multiplier = value
 func grow(type):
 	max_size += food_value[type]
-	experience += food_value[type]
+	experience += exp_multiplier
 
 func gain(type):
 	if type == 0:
-		colors[type] += 1
+		colors[type] += food_value[type]
 	elif sum_of_colors() < max_size:
 		var new_color = Color(0.9, 0.9, 0.9)
 		if type == 1:
@@ -193,7 +196,7 @@ func gain(type):
 		elif type == 3:
 			new_color = Color(0,0,1)
 		snake_array[0]["color"] = new_color
-		colors[type] += 1
+		colors[type] += food_value[type]
 
 func sum_of_colors():
 	return colors[1] + colors[2] + colors[3]

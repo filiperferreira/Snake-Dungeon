@@ -24,23 +24,23 @@ custom_constants/separation = 10
 alignment = 1
 
 [node name="Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer"]
-margin_top = 197.0
+margin_top = 170.0
 margin_right = 492.0
-margin_bottom = 211.0
+margin_bottom = 184.0
 text = "UPGRADE MENU"
 align = 1
 
 [node name="CurrentXP" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer"]
-margin_top = 221.0
+margin_top = 194.0
 margin_right = 492.0
-margin_bottom = 235.0
+margin_bottom = 208.0
 text = "CURRENT XP: 0"
 align = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/MarginContainer/VBoxContainer"]
-margin_top = 245.0
+margin_top = 218.0
 margin_right = 492.0
-margin_bottom = 265.0
+margin_bottom = 238.0
 custom_constants/margin_right = 50
 custom_constants/margin_left = 50
 
@@ -70,10 +70,43 @@ margin_right = 392.0
 margin_bottom = 20.0
 text = "Buy (Cost: 0 XP)"
 
-[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/MarginContainer/VBoxContainer"]
-margin_top = 275.0
+[node name="MarginContainer3" type="MarginContainer" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+margin_top = 248.0
 margin_right = 492.0
-margin_bottom = 295.0
+margin_bottom = 268.0
+custom_constants/margin_right = 50
+custom_constants/margin_left = 50
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer3"]
+margin_left = 50.0
+margin_right = 442.0
+margin_bottom = 20.0
+alignment = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer3/HBoxContainer"]
+margin_top = 3.0
+margin_right = 136.0
+margin_bottom = 17.0
+text = "Experience Multiplier"
+
+[node name="ExpValueMultiplierLabel" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer3/HBoxContainer"]
+margin_left = 140.0
+margin_top = 3.0
+margin_right = 276.0
+margin_bottom = 17.0
+size_flags_horizontal = 3
+text = "(Current: x0)"
+
+[node name="ExpValueMultiplierButton" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer3/HBoxContainer"]
+margin_left = 280.0
+margin_right = 392.0
+margin_bottom = 20.0
+text = "Buy (Cost: 0 XP)"
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+margin_top = 278.0
+margin_right = 492.0
+margin_bottom = 298.0
 custom_constants/margin_right = 50
 custom_constants/margin_left = 50
 
@@ -103,5 +136,13 @@ margin_right = 392.0
 margin_bottom = 20.0
 text = "Buy (Cost: 0 XP)"
 
+[node name="Label2" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+margin_top = 308.0
+margin_right = 492.0
+margin_bottom = 322.0
+text = "Press 'R' to play again"
+align = 1
+
 [connection signal="pressed" from="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/SnakeInitialSizeButton" to="." method="_on_SnakeInitialSizeButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer3/HBoxContainer/ExpValueMultiplierButton" to="." method="_on_ExpValueMultiplierButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer2/HBoxContainer/PelletValueButton" to="." method="_on_PelletValueButton_pressed"]

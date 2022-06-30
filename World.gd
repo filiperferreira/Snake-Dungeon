@@ -31,6 +31,7 @@ func _on_Snake_death(experience):
 func set_stats(stats):
 	$Snake.set_starting_size(stats["snake_starting_size"])
 	$Snake.set_food_value(0, stats["white_pellet_value"])
+	$Snake.set_exp_multiplier(stats["exp_multiplier"])
 
 signal reload
 func restart_game():

@@ -39,13 +39,13 @@ func update_menu():
 	exp_multiplier_button.set_text("Buy (Cost: " + str(exp_multiplier_cost(cur_stats["exp_multiplier"])) + " XP)")
 
 func snake_size_cost(level):
-	return round((pow(level-5, 1.2) + 1))
+	return round((pow(level-4, 1.1)))
 
 func exp_multiplier_cost(level):
-	return round(50 * pow(level-1, 1.2) + 50)
+	return round(50 * pow(level, 1.3))
 
 func pellet_value_cost(level):
-	return round(100 * pow(level-1, 1.2) + 100)
+	return round(100 * pow(level, 1.2))
 
 func _on_SnakeInitialSizeButton_pressed():
 	if cur_exp >= snake_size_cost(cur_stats["snake_starting_size"]):

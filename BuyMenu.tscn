@@ -1,0 +1,107 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://BuyMenu.gd" type="Script" id=1]
+
+[node name="UpgradeMenu" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 502.0
+margin_bottom = 502.0
+custom_constants/separation = 10
+alignment = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+margin_top = 197.0
+margin_right = 492.0
+margin_bottom = 211.0
+text = "UPGRADE MENU"
+align = 1
+
+[node name="CurrentXP" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+margin_top = 221.0
+margin_right = 492.0
+margin_bottom = 235.0
+text = "CURRENT XP: 0"
+align = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+margin_top = 245.0
+margin_right = 492.0
+margin_bottom = 265.0
+custom_constants/margin_right = 50
+custom_constants/margin_left = 50
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer"]
+margin_left = 50.0
+margin_right = 442.0
+margin_bottom = 20.0
+alignment = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+margin_top = 3.0
+margin_right = 108.0
+margin_bottom = 17.0
+text = "Initial Snake Size"
+
+[node name="SnakeInitialSizeLabel" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+margin_left = 112.0
+margin_top = 3.0
+margin_right = 276.0
+margin_bottom = 17.0
+size_flags_horizontal = 3
+text = "(Current: 0)"
+
+[node name="SnakeInitialSizeButton" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+margin_left = 280.0
+margin_right = 392.0
+margin_bottom = 20.0
+text = "Buy (Cost: 0 XP)"
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+margin_top = 275.0
+margin_right = 492.0
+margin_bottom = 295.0
+custom_constants/margin_right = 50
+custom_constants/margin_left = 50
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer2"]
+margin_left = 50.0
+margin_right = 442.0
+margin_bottom = 20.0
+alignment = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer2/HBoxContainer"]
+margin_top = 3.0
+margin_right = 76.0
+margin_bottom = 17.0
+text = "Pellet Value"
+
+[node name="PelletValueLabel" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer2/HBoxContainer"]
+margin_left = 80.0
+margin_top = 3.0
+margin_right = 276.0
+margin_bottom = 17.0
+size_flags_horizontal = 3
+text = "(Current: 0)"
+
+[node name="PelletValueButton" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer2/HBoxContainer"]
+margin_left = 280.0
+margin_right = 392.0
+margin_bottom = 20.0
+text = "Buy (Cost: 0 XP)"
+
+[connection signal="pressed" from="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/SnakeInitialSizeButton" to="." method="_on_SnakeInitialSizeButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer2/HBoxContainer/PelletValueButton" to="." method="_on_PelletValueButton_pressed"]

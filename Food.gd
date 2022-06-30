@@ -22,7 +22,7 @@ signal eaten
 func get_eaten(snake):
 	snake.gain(type)
 	if type == 0:
-		snake.grow()
+		snake.grow(type)
 	emit_signal("eaten", self)
 
 signal in_wall

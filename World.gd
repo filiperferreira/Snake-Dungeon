@@ -3,27 +3,42 @@ extends Node2D
 const WINDOW_HEIGHT = 512
 const WINDOW_WIDTH = 512
 
-const FOOD = preload("res://Food.tscn")
+onready var snake = $Snake
+
 var dead = false
 
-func _process(delta):
-	set_snake_size_label($Snake.get_size())
-	set_red_color_label($Snake.get_color(1))
-	set_green_color_label($Snake.get_color(2))
-	set_blue_color_label($Snake.get_color(3))
-	if dead and Input.is_action_just_pressed("restart"):
-		restart_game()
+func _process(_delta):
+	set_snake_size_label(snake.get_size())
+	set_red_color_label(snake.get_color(1))
+	set_green_color_label(snake.get_color(2))
+	set_blue_color_label(snake.get_color(3))
+	if dead:
+		if Input.is_action_just_pressed("restart"):
+			restart_game()
+		elif Input.is_action_just_pressed("upgrade"):
+			load_upgrade_menu()
 
 func _ready():
 	randomize()
-	set_snake_size_label($Snake.get_size())
+	set_snake_size_label(snake.get_size())
 
-func _on_Snake_death():
+signal exp_gain
+func _on_Snake_death(experience):
+	emit_signal("exp_gain", experience)
 	$CanvasLayer/Label.set_visible(true)
 	dead = true
 
+func set_stats(stats):
+	$Snake.set_starting_size(stats["snake_starting_size"])
+	$Snake.set_food_value(0, stats["white_pellet_value"])
+
+signal reload
 func restart_game():
-	get_tree().reload_current_scene()
+	emit_signal("reload")
+
+signal upgrade
+func load_upgrade_menu():
+	emit_signal("upgrade")
 
 func set_snake_size_label(value):
 	$CanvasLayer/SnakeSize.text = "Snake size: " + str(value)

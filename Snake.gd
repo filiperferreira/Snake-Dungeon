@@ -4,17 +4,24 @@ const SQUARE_SIZE = 16.0
 const AREA_SCRIPT = preload("res://PlayerArea.gd")
 const HEAD_SCRIPT = preload("res://HeadArea.gd")
 
-var max_size = 5
+var max_size = 1
 var cur_size = 1
 var red_count = 0
 var snake_array = []
 func get_size():
 	return max_size
+func set_starting_size(starting_size):
+	max_size = starting_size
+	colors[BLANK] = starting_size
 
 enum {BLANK, RED, GREEN, BLUE}
-var colors = {BLANK: 5, RED: 0, GREEN: 0, BLUE: 0}
+var colors = {BLANK: max_size, RED: 0, GREEN: 0, BLUE: 0}
 func get_color(type):
 	return colors[type]
+
+var food_value = {BLANK: 1, RED: 1, GREEN: 1, BLUE: 1}
+func set_food_value(type, value):
+	food_value[type] = value
 
 func spend_color(type, amount):
 	if type != 0:
@@ -75,18 +82,31 @@ func pause():
 	if Input.is_action_just_pressed("pause"):
 		$MoveTimer.set_paused(!$MoveTimer.is_paused())
 
+var input_queue = []
 var movement_direction = Vector2(0,0)
 func set_movement_direction():
-	if Input.is_action_just_pressed("up") and previous_move != Vector2(0,1):
-		movement_direction = Vector2(0,-1)
-	if Input.is_action_just_pressed("down") and previous_move != Vector2(0,-1):
-		movement_direction = Vector2(0,1)
-	if Input.is_action_just_pressed("left") and previous_move != Vector2(1,0):
-		movement_direction = Vector2(-1,0)
-	if Input.is_action_just_pressed("right") and previous_move != Vector2(-1,0):
-		movement_direction = Vector2(1,0)
+	if Input.is_action_just_pressed("up"):
+		if movement_direction != Vector2(0,0):
+			input_queue.push_back(Vector2(0,-1))
+		else:
+			movement_direction = Vector2(0,-1)
+	if Input.is_action_just_pressed("down"):
+		if movement_direction != Vector2(0,0):
+			input_queue.push_back(Vector2(0,1))
+		else:
+			movement_direction = Vector2(0,1)
+	if Input.is_action_just_pressed("left"):
+		if movement_direction != Vector2(0,0):
+			input_queue.push_back(Vector2(-1,0))
+		else:
+			movement_direction = Vector2(-1,0)
+	if Input.is_action_just_pressed("right"):
+		if movement_direction != Vector2(0,0):
+			input_queue.push_back(Vector2(1,0))
+		else:
+			movement_direction = Vector2(1,0)
 
-func _process(delta):
+func _process(_delta):
 	if $MoveTimer.is_stopped() and !dead and movement_direction != Vector2(0,0):
 		$MoveTimer.start()
 	if !$MoveTimer.is_paused():
@@ -98,9 +118,14 @@ func _draw():
 		draw_rect(Rect2(square["position"] - Vector2(SQUARE_SIZE/2, SQUARE_SIZE/2), Vector2(SQUARE_SIZE, SQUARE_SIZE)), Color(1,1,1))
 		draw_rect(Rect2(square["position"] - Vector2(SQUARE_SIZE/2, SQUARE_SIZE/2) + Vector2(1,1), Vector2(SQUARE_SIZE - 2, SQUARE_SIZE - 2)), square["color"])
 
-var previous_move
+#var previous_move
 func move():
-	previous_move = movement_direction
+	while input_queue.size() != 0:
+		var next_move = input_queue.pop_front()
+		if next_move != movement_direction * -1:
+			movement_direction = next_move
+			break
+#	previous_move = movement_direction
 	var previous_snake_part
 #	if cur_size > max_size:
 #		for i in cur_size - max_size:
@@ -151,8 +176,10 @@ func overlap(area):
 	else:
 		pass
 
-func grow():
-	max_size += 1
+var experience = 0
+func grow(type):
+	max_size += food_value[type]
+	experience += food_value[type]
 
 func gain(type):
 	if type == 0:
@@ -180,7 +207,7 @@ func die():
 	print("dead")
 	dead = true
 	$MoveTimer.stop()
-	emit_signal("death")
+	emit_signal("death", experience)
 
 func _on_MoveTimer_timeout():
 	move()
